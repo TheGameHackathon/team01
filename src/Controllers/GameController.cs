@@ -5,6 +5,8 @@ namespace thegame.Controllers
     [Route("api/game")]
     public class GameController : Controller
     {
+        private Game.Game game;
+
         [HttpGet("score")]
         public IActionResult Score()
         {
@@ -14,10 +16,8 @@ namespace thegame.Controllers
         [HttpGet("field")]
         public IActionResult GetField()
         {
-            var map = new int[4, 4];
-            map[1, 1] = 2;
-            map[2, 3] = 2;
-            return Ok(map);
+            game = new Game.Game(4, 4);
+            return Ok(game.Map);
         }
     }
 }
