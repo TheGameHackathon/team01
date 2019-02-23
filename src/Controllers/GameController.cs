@@ -10,7 +10,7 @@ namespace thegame.Controllers
         [HttpGet("score")]
         public IActionResult Score()
         {
-            return Ok(50);
+            return Ok(100);
         }
 
         [HttpGet("field")]
