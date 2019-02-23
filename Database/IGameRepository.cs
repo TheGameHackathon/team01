@@ -11,5 +11,7 @@ namespace Database
         void UpdateOrInsert(GameEntity game);
 
         void Delete(Guid gameId);
+
+        GameEntity GetAll();
     }
 }
