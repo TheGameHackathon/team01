@@ -13,23 +13,30 @@ export default class App extends React.Component {
     
     componentDidMount() {
         document.addEventListener("keydown", this.handleKeyPress, false);
+
+        fetch(`/api/game/field`)
+            .then(res => res.json())
+            .then(res => this.onReponse(res));
+
     }
 
     componentWillUnmount() {
         document.removeEventListener("keydown", this.handleKeyPress, false);
     }
 
-    handleKeyPress(e) {
+    handleKeyPress = (e) => {
         switch (e.keyCode) {
             case 37:
                 fetch(`/api/game/score`)
                     .then(res => res.json())
-                    .then(res => { this.fieldState = res });
+                    .then(res => this.onReponse(res) );
         }
         
     }
 
-    onReponse(fieldState) {
+    onReponse = (fieldState) => {
+
+        console.log(fieldState);
         this.setState({fieldState});
     }
 

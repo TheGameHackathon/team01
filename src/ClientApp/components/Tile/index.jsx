@@ -8,12 +8,10 @@ export default class Tile extends React.Component {
         this.state = { value: this.props.value};
     }
 
-    render() {
-
-        
+    render() {       
         
         return (
-            <div className={`${styles.tile} ${styles.tile2}`}>
+            <div className={`${styles.tile} ${styles[`tile${this.props.value}`]}`}>
                 {this.state.value}
             </div>
         );
