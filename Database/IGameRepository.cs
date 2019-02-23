@@ -4,7 +4,7 @@ namespace Database
 {
     public interface IGameRepository
     {
-        void Insert();
+        void Insert(GameEntity game);
 
         void Update(GameEntity game);
 
