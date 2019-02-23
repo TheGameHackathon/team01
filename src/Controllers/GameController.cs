@@ -10,5 +10,14 @@ namespace thegame.Controllers
         {
             return Ok(50);
         }
+
+        [HttpGet("field")]
+        public IActionResult GetField()
+        {
+            var map = new int[4, 4];
+            map[1, 1] = 2;
+            map[2, 3] = 2;
+            return Ok(map);
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using MongoDB.Driver;
 
 namespace Database
@@ -13,29 +14,32 @@ namespace Database
             gameCollection = database.GetCollection<GameEntity>(CollectionName);
         }
 
-        public void Insert()
+        public void Insert(GameEntity game)
         {
-            throw new NotImplementedException();
+            gameCollection.InsertOne(game);
         }
 
         public void Update(GameEntity game)
         {
-            throw new NotImplementedException();
+            gameCollection.ReplaceOne(g => g.Id == game.Id, game);
         }
 
         public void UpdateOrInsert(GameEntity game)
         {
-            throw new NotImplementedException();
+            if (gameCollection.Find(g => g.Id == game.Id).Any())
+                Update(game);
+            else
+                Insert(game);
         }
 
         public void Delete(Guid gameId)
         {
-            throw new NotImplementedException();
+            gameCollection.DeleteOne(game => game.Id == gameId);
         }
 
-        public GameEntity GetAll()
+        public IEnumerable<GameEntity> GetAll()
         {
-            throw new NotImplementedException();
+            return gameCollection.Find(FilterDefinition<GameEntity>.Empty).ToEnumerable();
         }
     }
 }
