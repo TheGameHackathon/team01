@@ -6,17 +6,47 @@ export default class App extends React.Component {
     constructor () {
         super();
         this.state = {
-            score: 50,
+            score: 0,
+            fieldState: {}
         };
+    }
+    
+    componentDidMount() {
+        document.addEventListener("keydown", this.handleKeyPress, false);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener("keydown", this.handleKeyPress, false);
+    }
+
+    handleKeyPress(e) {
+        switch (e.keyCode) {
+            case 37:
+                fetch(`/api/game/score`)
+                    .then(res => res.json())
+                    .then(res => { this.fieldState = res });
+        }
+        
+    }
+
+    onReponse(fieldState) {
+        this.setState({fieldState});
+    }
+
+    keyCodes = {
+        37: "left",
+        38: "up",
+        39: "right",
+        40: "down"
     }
 
     render () {
         return (
-            <div className={ styles.root }>
+            <div className={styles.root}>
                 <div className={ styles.score }>
                     Ваш счет: { this.state.score }
                 </div>
-                <Field />
+                <Field fieldState={this.state.fieldState} />
             </div>
         );
     }
