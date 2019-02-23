@@ -5,4 +5,8 @@
     /*height: 128px;*/
     background-color: #9a937e;
     outline: 1px solid black;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
