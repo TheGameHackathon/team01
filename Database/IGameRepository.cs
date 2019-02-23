@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Database
 {
@@ -12,6 +13,6 @@ namespace Database
 
         void Delete(Guid gameId);
 
-        GameEntity GetAll();
+        IEnumerable<GameEntity> GetAll();
     }
 }
