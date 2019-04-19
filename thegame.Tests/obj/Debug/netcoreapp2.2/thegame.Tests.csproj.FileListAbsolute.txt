@@ -1,0 +1,17 @@
+P:\src\C#\team1\thegame.Tests\bin\Debug\netcoreapp2.2\thegame.Tests.deps.json
+P:\src\C#\team1\thegame.Tests\bin\Debug\netcoreapp2.2\thegame.Tests.dll
+P:\src\C#\team1\thegame.Tests\bin\Debug\netcoreapp2.2\thegame.dll
+P:\src\C#\team1\thegame.Tests\bin\Debug\netcoreapp2.2\thegame.pdb
+P:\src\C#\team1\thegame.Tests\obj\Debug\netcoreapp2.2\thegame.Tests.csprojAssemblyReference.cache
+P:\src\C#\team1\thegame.Tests\obj\Debug\netcoreapp2.2\thegame.Tests.csproj.CoreCompileInputs.cache
+P:\src\C#\team1\thegame.Tests\obj\Debug\netcoreapp2.2\thegame.Tests.AssemblyInfoInputs.cache
+P:\src\C#\team1\thegame.Tests\obj\Debug\netcoreapp2.2\thegame.Tests.AssemblyInfo.cs
+P:\src\C#\team1\thegame.Tests\obj\Debug\netcoreapp2.2\thegame.Tests.csproj.CopyComplete
+P:\src\C#\team1\thegame.Tests\bin\Debug\netcoreapp2.2\thegame.Tests.runtimeconfig.json
+P:\src\C#\team1\thegame.Tests\bin\Debug\netcoreapp2.2\thegame.Tests.runtimeconfig.dev.json
+P:\src\C#\team1\thegame.Tests\bin\Debug\netcoreapp2.2\NUnit3.TestAdapter.dll
+P:\src\C#\team1\thegame.Tests\bin\Debug\netcoreapp2.2\NUnit3.TestAdapter.pdb
+P:\src\C#\team1\thegame.Tests\bin\Debug\netcoreapp2.2\nunit.engine.netstandard.dll
+P:\src\C#\team1\thegame.Tests\bin\Debug\netcoreapp2.2\thegame.Tests.pdb
+P:\src\C#\team1\thegame.Tests\obj\Debug\netcoreapp2.2\thegame.Tests.dll
+P:\src\C#\team1\thegame.Tests\obj\Debug\netcoreapp2.2\thegame.Tests.pdb
