@@ -11,7 +11,7 @@ namespace thegame.Tests
         [Test]
         public void ReturnCorrectPlayerPos()
         {
-            var gameEntity = GameEntity.CreateGameEntity();
+            var gameEntity = GameEntity.CreateGameEntity(5);
             var vec = gameEntity.GetPlayerPosition();
             Assert.That(vec.X, Is.EqualTo(1));
             Assert.That(vec.Y, Is.EqualTo(1));

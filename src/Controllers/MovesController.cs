@@ -21,7 +21,7 @@ namespace thegame.Controllers
             var gameEntity = _gameRepo.Get(gameId);
             var mapper = new Mapper();
             if (UserInputHandled(userInput))
-                return new ObjectResult( mapper.Map(gameEntity));
+                return new ObjectResult(mapper.Map(gameEntity, gameId));
 
             var sokoban = new Sokoban(gameEntity);
 
@@ -31,7 +31,7 @@ namespace thegame.Controllers
             //    game.Cells.First(c => c.Type == "player").Pos = userInput.ClickedPos;
 
             _gameRepo.Save(gameEntity, gameId);
-            return new ObjectResult(mapper.Map(gameEntity));
+            return new ObjectResult(mapper.Map(gameEntity, gameId));
         }
 
         private bool UserInputHandled(UserInputForMovesPost userInput)

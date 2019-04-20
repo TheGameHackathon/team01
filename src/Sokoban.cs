@@ -25,7 +25,6 @@ namespace thegame
                 return;
             }
         }
-         
 
         private Vec GetPlayerPosition(Direction dir)
         {

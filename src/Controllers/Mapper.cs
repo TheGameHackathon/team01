@@ -20,7 +20,7 @@ namespace thegame.Controllers
         private CellDto[] GetCells(GameEntity gameEntity)
         {
             gameEntity.GetTargets();
-
+            return null;
         }
     }
 }

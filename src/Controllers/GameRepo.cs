@@ -8,7 +8,7 @@ namespace thegame.Controllers
         private readonly Dictionary<Guid, GameEntity> _games = new Dictionary<Guid, GameEntity>();
         public GameEntity Get(Guid gameId)
         {
-            return _games[gameId];
+            return _games.TryGetValue(gameId, out var value) ? value : GameEntity.CreateGameEntity(5);
         }
 
         public void Save(GameEntity gameEntity, Guid gameId)
