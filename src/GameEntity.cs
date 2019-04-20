@@ -17,7 +17,7 @@ namespace thegame
         public static GameEntity CreateGameEntity()
         {
             var gameEntity = new GameEntity(2, 2);
-            gameEntity.targets[1, 1] = new GameObject(){Type = "player"};
+            gameEntity.objects[1, 1] = new GameObject(){Type = "player"};
             return gameEntity;
         }
 
