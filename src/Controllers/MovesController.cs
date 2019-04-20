@@ -30,7 +30,7 @@ namespace thegame.Controllers
             //if (userInput.ClickedPos != null)
             //    game.Cells.First(c => c.Type == "player").Pos = userInput.ClickedPos;
 
-            _gameRepo.Save(gameEntity);
+            _gameRepo.Save(gameEntity, gameId);
             return new ObjectResult(mapper.Map(gameEntity));
         }
 
