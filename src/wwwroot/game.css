@@ -20,7 +20,9 @@
     background-color: magenta;
 }
 
-
+.floor {
+    background-color: black;
+}
 
 /* 2048 styles */
 
