@@ -1,8 +1,6 @@
 using System;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using thegame.Models;
-using thegame.Services;
 
 namespace thegame.Controllers
 {
@@ -27,9 +25,6 @@ namespace thegame.Controllers
             var sokoban = new Sokoban(gameEntity);
 
             sokoban.Move(GetDirection(key));
-            //var game = TestData.AGameDto(userInput.ClickedPos ?? new Vec(1, 1));
-            //if (userInput.ClickedPos != null)
-            //    game.Cells.First(c => c.Type == "player").Pos = userInput.ClickedPos;
 
             _gameRepo.Save(gameEntity, gameId);
             return new ObjectResult(mapper.Map(gameEntity, gameId));

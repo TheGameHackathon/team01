@@ -19,13 +19,6 @@ namespace thegame
         {
             var id = 0;
             var gameEntity = new GameEntity(size, size);
-            for (int i = 0; i < size; i++)
-            {
-                for (int j = 0; j < size; j++)
-                {
-                    //gameEntity.objects[i, j] = new GameObject() { Type = "floor" };
-                }
-            }
             gameEntity.objects[2, 2] = new GameObject(id++) {Type = "player"};
             for (int i = 0; i < size; i++)
             {
@@ -36,7 +29,7 @@ namespace thegame
             }
             gameEntity.objects[2, 1] = new GameObject(id++) { Type = "box" };
             gameEntity.objects[2, 3] = new GameObject(id++) { Type = "box" };
-            //
+            //targets
             gameEntity.targets[3, 1] = new GameObject(id++) { Type = "target" };
             gameEntity.targets[3, 3] = new GameObject(id++) { Type = "target" };
             return gameEntity;
@@ -63,7 +56,7 @@ namespace thegame
 
         public bool IsEmptyCell(Vec pos)
         {
-            return (objects[pos.X, pos.Y] == null );
+            return (objects[pos.X, pos.Y] == null);
         }
 
         public void MovePlayer(Direction dir)

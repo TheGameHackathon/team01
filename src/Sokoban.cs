@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
-using thegame.Models;
+﻿using thegame.Models;
 
 namespace thegame
 {
@@ -22,7 +17,6 @@ namespace thegame
             if (_gameEntity.IsEmptyCell(newPosition))
             {
                 _gameEntity.MovePlayer(dir);
-                return;
             }
         }
 
