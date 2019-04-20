@@ -23,19 +23,22 @@ namespace thegame.Controllers
         {
             var id = 0;
             var cells = new List<CellDto>();
-            ProcessObjects(cells, gameEntity.GetObjects(), 0, ref id);
-            ProcessObjects(cells, gameEntity.GetTargets(), 1, ref id);
+            ProcessObjects(cells, gameEntity.GetObjects(), 0);
+            ProcessObjects(cells, gameEntity.GetTargets(), 1);
             return cells.ToArray();
         }
 
-        private static void ProcessObjects(ICollection<CellDto> cells, GameObject[,] objects, int zIndex, ref int id)
+        private static void ProcessObjects(ICollection<CellDto> cells, GameObject[,] objects, int zIndex)
         {
             var width = objects.GetLength(1);
             for (int i = 0; i < objects.GetLength(0); i++)
             {
                 for (int j = 0; j < width; j++)
                 {
-                    cells.Add(new CellDto(id:id++.ToString(), pos: new Vec(j,i), type: objects[i,j].Type, content: "", zIndex: zIndex));
+                    var o = objects[i, j];
+                    if (o == null)
+                        continue;
+                    cells.Add(new CellDto(id:o.Id.ToString(), pos: new Vec(i,j), type: o.Type, content: "", zIndex: zIndex));
                 }
             }
         }

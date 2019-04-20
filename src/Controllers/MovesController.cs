@@ -19,13 +19,14 @@ namespace thegame.Controllers
         public IActionResult Moves(Guid gameId, [FromBody]UserInputForMovesPost userInput)
         {
             var gameEntity = _gameRepo.Get(gameId);
+            var key = char.ToLower(userInput.KeyPressed);
             var mapper = new Mapper();
-            if (UserInputHandled(userInput))
+            if (UserInputHandled(key))
                 return new ObjectResult(mapper.Map(gameEntity, gameId));
 
             var sokoban = new Sokoban(gameEntity);
 
-            sokoban.Move(GetDirection(userInput));
+            sokoban.Move(GetDirection(key));
             //var game = TestData.AGameDto(userInput.ClickedPos ?? new Vec(1, 1));
             //if (userInput.ClickedPos != null)
             //    game.Cells.First(c => c.Type == "player").Pos = userInput.ClickedPos;
@@ -34,9 +35,9 @@ namespace thegame.Controllers
             return new ObjectResult(mapper.Map(gameEntity, gameId));
         }
 
-        private bool UserInputHandled(UserInputForMovesPost userInput)
+        private bool UserInputHandled(char userInput)
         {
-            switch (userInput.KeyPressed)
+            switch (userInput)
             {
                 case 'w':
                 
@@ -50,9 +51,9 @@ namespace thegame.Controllers
             return true;
         }
 
-        private Direction GetDirection(UserInputForMovesPost userInput)
+        private Direction GetDirection(char userInput)
         {
-            switch (userInput.KeyPressed)
+            switch (userInput)
             {
                 case 'w':
                     return Direction.Up;

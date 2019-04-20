@@ -17,26 +17,28 @@ namespace thegame
 
         public static GameEntity CreateGameEntity(int size)
         {
+            var id = 0;
             var gameEntity = new GameEntity(size, size);
             for (int i = 0; i < size; i++)
             {
                 for (int j = 0; j < size; j++)
                 {
-                    gameEntity.objects[i, j] = new GameObject() { Type = "floor" };
+                    //gameEntity.objects[i, j] = new GameObject() { Type = "floor" };
                 }
             }
-            gameEntity.objects[2, 2] = new GameObject() {Type = "player"};
+            gameEntity.objects[2, 2] = new GameObject(id++) {Type = "player"};
             for (int i = 0; i < size; i++)
             {
-                gameEntity.objects[0, i] = new GameObject() { Type = "wall" };
-                gameEntity.objects[i, 0] = new GameObject() { Type = "wall" };
-                gameEntity.objects[size - 1, i] = new GameObject() { Type = "wall" };
-                gameEntity.objects[i, size - 1] = new GameObject() { Type = "wall" };
+                gameEntity.objects[0, i] = new GameObject(id++) { Type = "wall" };
+                gameEntity.objects[i, 0] = new GameObject(id++) { Type = "wall" };
+                gameEntity.objects[size - 1, i] = new GameObject(id++) { Type = "wall" };
+                gameEntity.objects[i, size - 1] = new GameObject(id++) { Type = "wall" };
             }
-            gameEntity.objects[2, 1] = new GameObject() { Type = "box" };
-            gameEntity.objects[2, 3] = new GameObject() { Type = "box" };
-            gameEntity.targets[3, 1] = new GameObject() { Type = "target" };
-            gameEntity.targets[3, 3] = new GameObject() { Type = "target" };
+            gameEntity.objects[2, 1] = new GameObject(id++) { Type = "box" };
+            gameEntity.objects[2, 3] = new GameObject(id++) { Type = "box" };
+            //
+            gameEntity.targets[3, 1] = new GameObject(id++) { Type = "target" };
+            gameEntity.targets[3, 3] = new GameObject(id++) { Type = "target" };
             return gameEntity;
         }
 
@@ -61,12 +63,16 @@ namespace thegame
 
         public bool IsEmptyCell(Vec pos)
         {
-            return (targets[pos.X, pos.Y] == null && objects[pos.X, pos.Y] == null);
+            return (objects[pos.X, pos.Y] == null );
         }
 
         public void MovePlayer(Direction dir)
         {
-            Helpers.Move(GetPlayerPosition(), dir);
+            var pos = Helpers.Move(GetPlayerPosition(), dir);
+            var oldPos = GetPlayerPosition();
+            var player = objects[oldPos.X, oldPos.Y];
+            objects[oldPos.X, oldPos.Y] = null;
+            objects[pos.X, pos.Y] = player;
         }
 
         public GameObject GetObject(Vec pos)
@@ -81,6 +87,8 @@ namespace thegame
                 for (var j = 0; j < targets.GetLength(1); j++)
                 {
                     if (targets[i, j] == null) continue;
+                    if (objects[i, j] == null)
+                        return false;
                     if (objects[i, j].Type != "box")
                         return false;
                 }
