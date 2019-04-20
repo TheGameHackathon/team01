@@ -75,6 +75,14 @@ namespace thegame
             objects[pos.X, pos.Y] = player;
         }
 
+        public void MoveBox(Vec oldPos, Direction dir)
+        {
+            var newPos = Helpers.Move(oldPos, dir); 
+            var obj = objects[oldPos.X, oldPos.Y];
+            objects[oldPos.X, oldPos.Y] = null;
+            objects[newPos.X, newPos.Y] = obj;
+        }
+
         public GameObject GetObject(Vec pos)
         {
             return objects[pos.X, pos.Y];
@@ -131,6 +139,11 @@ namespace thegame
         public GameObject[,] GetObjects()
         {
             return objects;
+        }
+
+        public bool IsBox(Vec pos)
+        {
+            return objects[pos.X, pos.Y].Type.Equals("box", StringComparison.InvariantCultureIgnoreCase);
         }
     }
 }

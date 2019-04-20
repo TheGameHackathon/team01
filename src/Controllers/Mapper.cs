@@ -30,6 +30,7 @@ namespace thegame.Controllers
 
         private static void ProcessObjects(ICollection<CellDto> cells, GameObject[,] objects, int zIndex)
         {
+            var id = objects.GetLength(1) * objects.GetLength(0) * 2;
             var width = objects.GetLength(1);
             for (int i = 0; i < objects.GetLength(0); i++)
             {
@@ -37,10 +38,14 @@ namespace thegame.Controllers
                 {
                     var o = objects[i, j];
                     if (o == null)
+                    {
                         continue;
-                    cells.Add(new CellDto(id:o.Id.ToString(), pos: new Vec(i,j), type: o.Type, content: "", zIndex: zIndex));
+                    }
+                    cells.Add(new CellDto(id: o.Id.ToString(), pos: new Vec(i, j), type: o.Type, content: "", zIndex: zIndex));
+
                 }
             }
+            
         }
 
     }
