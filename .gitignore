@@ -1,3 +1,6 @@
 /.vs/
 /.idea
 /*.user
+packages/
+/**/obj/
+/**/bin/
