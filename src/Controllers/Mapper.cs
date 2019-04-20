@@ -23,8 +23,8 @@ namespace thegame.Controllers
         {
             var id = 0;
             var cells = new List<CellDto>();
-            ProcessObjects(cells, gameEntity.GetObjects(), 0);
-            ProcessObjects(cells, gameEntity.GetTargets(), 1);
+            ProcessObjects(cells, gameEntity.GetObjects(), 1);
+            ProcessObjects(cells, gameEntity.GetTargets(), 0);
             return cells.ToArray();
         }
 
