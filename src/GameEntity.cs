@@ -14,10 +14,26 @@ namespace thegame
             objects = new GameObject[dim1, dim2];
         }
 
-        public static GameEntity CreateGameEntity()
+        public static GameEntity CreateGameEntity(int size)
         {
-            var gameEntity = new GameEntity(2, 2);
-            gameEntity.objects[1, 1] = new GameObject(){Type = "player"};
+            var gameEntity = new GameEntity(size, size);
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    gameEntity.objects[i, j] = new GameObject() { Type = "floor" };
+                }
+            }
+            gameEntity.objects[2, 2] = new GameObject() {Type = "player"};
+            for (int i = 0; i < size; i++)
+            {
+                gameEntity.objects[0, i] = new GameObject() { Type = "wall" };
+                gameEntity.objects[i, 0] = new GameObject() { Type = "wall" };
+                gameEntity.objects[size - 1, i] = new GameObject() { Type = "wall" };
+                gameEntity.objects[i, size - 1] = new GameObject() { Type = "wall" };
+            }
+            gameEntity.objects[1, 1] = new GameObject() { Type = "box" };
+            gameEntity.objects[2, 3] = new GameObject() { Type = "box" };
             return gameEntity;
         }
 
@@ -68,6 +84,36 @@ namespace thegame
             }
 
             return true;
+        }
+
+        public int GetWidth()
+        {
+            return objects.GetLength(0);
+        }
+
+        public int GetHeight()
+        {
+            return objects.GetLength(1);
+        }
+
+        public bool IsFinished()
+        {
+            return false;
+        }
+
+        public int GetScore()
+        {
+            return 0;
+        }
+
+        public GameObject[,] GetTargets()
+        {
+            return targets;
+        }
+
+        public GameObject[,] GetObjects()
+        {
+            return objects;
         }
     }
 }
