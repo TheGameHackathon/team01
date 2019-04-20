@@ -1,4 +1,5 @@
 ﻿using System;
+using Remotion.Linq.Parsing.Structure.IntermediateModel;
 using thegame.Models;
 
 namespace thegame
@@ -32,8 +33,10 @@ namespace thegame
                 gameEntity.objects[size - 1, i] = new GameObject() { Type = "wall" };
                 gameEntity.objects[i, size - 1] = new GameObject() { Type = "wall" };
             }
-            gameEntity.objects[1, 1] = new GameObject() { Type = "box" };
+            gameEntity.objects[2, 1] = new GameObject() { Type = "box" };
             gameEntity.objects[2, 3] = new GameObject() { Type = "box" };
+            gameEntity.targets[3, 1] = new GameObject() { Type = "target" };
+            gameEntity.targets[3, 3] = new GameObject() { Type = "target" };
             return gameEntity;
         }
 
@@ -71,7 +74,7 @@ namespace thegame
             return objects[pos.X, pos.Y];
         }
 
-        public bool AllTargetsWithBoxes()
+        public bool IsFinished()
         {
             for (var i = 0; i < targets.GetLength(0); i++)
             {
@@ -95,15 +98,21 @@ namespace thegame
         {
             return objects.GetLength(1);
         }
-
-        public bool IsFinished()
-        {
-            return false;
-        }
-
+        
         public int GetScore()
         {
-            return 0;
+            int sum = 0;
+            for (int i = 0; i < targets.GetLength(0); i++)
+            {
+                for (int j = 0; j < targets.GetLength(1); j++)
+                {
+                    if (targets[i, j] == null || objects[i, j] == null) continue;
+                    if (objects[i, j].Type != "box")
+                        sum++;
+                }
+            }
+
+            return sum;
         }
 
         public GameObject[,] GetTargets()
