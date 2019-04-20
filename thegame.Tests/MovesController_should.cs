@@ -1,6 +1,4 @@
-﻿using System;
-using NUnit.Framework;
-using thegame.Controllers;
+﻿using NUnit.Framework;
 using thegame.Models;
 
 namespace thegame.Tests
@@ -11,7 +9,6 @@ namespace thegame.Tests
         public void NotFailWhenNullUserInput()
         {
             var userInput = new UserInputForMovesPost('c', null);
-            //Assert.DoesNotThrow(() => new MovesController().Moves(Guid.NewGuid(), userInput));
         }
     }
 }

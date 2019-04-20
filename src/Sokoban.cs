@@ -24,7 +24,6 @@ namespace thegame
             if (_gameEntity.IsEmptyCell(newPosition))
             {
                 _gameEntity.MovePlayer(dir);
-                return;
             }
 
             //check box
