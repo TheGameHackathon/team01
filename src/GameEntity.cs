@@ -18,6 +18,7 @@ namespace thegame
         {
             var gameEntity = new GameEntity(2, 2);
             gameEntity.targets[1, 1] = new GameObject(){Type = "player"};
+            return gameEntity;
         }
 
         public Vec GetPlayerPosition()
