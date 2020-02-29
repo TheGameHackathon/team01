@@ -9,6 +9,7 @@ namespace thegame.Game.Domain
         public Game(int[,] field)
         {
             Field = field;
+            ActionsAllowed = new bool[field.GetLength(0),field.GetLength(1)];
             Score = 0;
         }
 
@@ -19,9 +20,12 @@ namespace thegame.Game.Domain
                 .Select(_ => Randomizer.GenerateInitCell())
                 .ToArray()
                 .Create2DArray(4, 4);
+            
+            ActionsAllowed = new bool[4, 4];
         }
 
         public int[,] Field { get; set; }
+        private bool[,] ActionsAllowed { get; set; }
         public int Score { get; set; }
 
         private static readonly Dictionary<ActionEnum, Tuple<int, int>> Shifts =
@@ -38,33 +42,43 @@ namespace thegame.Game.Domain
             var (iShift, jShift) = Shifts[action];
             var heigth = Field.GetLength(0);
             var widht = Field.GetLength(1);
+            
+            ActionsAllowed.FillWith(true);
 
-            var (iStart, iEnd) = (0, heigth);
-            var (jStart, jEnd) = (0, widht);
+            var (iStart, iEnd, iStep) = (-1, heigth, 1);
+            var (jStart, jEnd, jStep) = (-1, widht, 1);
 
-            if (action == ActionEnum.up)
-                (iStart, iEnd) = (iEnd, iStart);
-            if (action == ActionEnum.left)
-                (jStart, jEnd) = (jEnd, jStart);
+            if (action == ActionEnum.down)
+                (iStart, iEnd, iStep) = (iEnd, iStart, -1);
+            if (action == ActionEnum.right)
+                (jStart, jEnd, jStep) = (jEnd, jStart, -1);
 
-            for (var i = iStart; i < iEnd; ++i)
-            for (var j = jStart; j < jEnd; ++j)
+            for (var i = iStart; i != iEnd; i += iStep)
+            for (var j = jStart; j != jEnd; j += jStep)
             {
                 var iLast = i;
                 var jLast = j;
                 var iNext = i + iShift;
                 var jNext = j + jShift;
-                while (Field.IsInBorders(iNext, jNext) && Field[iNext, jNext] == 0)
+                while (Field.IsInBorders(iNext, jNext) 
+                       && Field.IsInBorders(iLast, jLast)
+                       && Field[iNext, jNext] == 0 
+                       && Field[iLast, jLast] != 0)
                 {
                     Field.Swap(iLast, jLast, iNext, jNext);
                     (iLast, jLast) = (iNext, jNext);
                     (iNext, jNext) = (iNext + iShift, jNext + jNext);
                 }
 
-                if (Field.IsInBorders(iNext, jNext) && Field[iLast, jLast] == Field[iNext, jNext])
+                if (Field.IsInBorders(iNext, jNext) 
+                    && Field.IsInBorders(iLast, jLast)
+                    && ActionsAllowed[iNext, jNext] 
+                    && Field[iLast, jLast] == Field[iNext, jNext])
                 {
                     Field[iLast, jLast] = 0;
                     Field[iNext, jNext] *= 2;
+
+                    ActionsAllowed[iNext, jNext] = false;
                 }
             }
 

@@ -26,14 +26,14 @@ namespace thegameTests.Test
         [Test]
         public void Should_MergeCellsWithSameValueOnAction()
         {
-            var game = new Game(new int[,]
+            var game = new Game(new[,]
             {
-                {0, 1},
-                {0, 1}
+                {1},
+                {1}
             });
 
             game.ProcessAction(ActionEnum.down);
-            game.Field[1, 1].Should().Be(2);
+            game.Field[1, 0].Should().Be(2);
         }
 
         [TestCase(ActionEnum.down)]
