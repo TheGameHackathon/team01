@@ -19,6 +19,12 @@ namespace thegame.Leaderboard
             return id;
         }
 
+        public bool IsUserAuthorized(string username, string password)
+        {
+            var user = new User(username, password);
+            return _board.ContainsValue(user);
+        }
+
         public User GetUser(Guid userId)
         {
             return _board.TryGetValue(userId, out var user) 
