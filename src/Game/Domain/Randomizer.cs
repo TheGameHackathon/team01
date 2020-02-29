@@ -2,9 +2,9 @@
 
 namespace thegame.Game.Domain
 {
-    public class Randomizer
+    public static class Randomizer
     {
-        private static Random Random;
-        static int GetInitCell() => Random;
+        private static Random Random = new Random();
+        public static int GenerateInitCell() => Random.NextDouble() <= 0.2 ? 4 : 8;
     }
 }
