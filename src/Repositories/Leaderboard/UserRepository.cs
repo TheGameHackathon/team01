@@ -13,8 +13,9 @@ namespace thegame.Leaderboard
             var newUser = new User(username, password);
             if (!GetUserId(newUser).Equals(Guid.Empty)) 
                 return Guid.Empty;
+
+            var id = Guid.NewGuid();
             
-            var id = new Guid();
             _board.Add(id, new User(username, password));
             return id;
         }

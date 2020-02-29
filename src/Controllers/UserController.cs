@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using thegame.DTO;
 using thegame.Leaderboard;
 
@@ -23,6 +24,8 @@ namespace thegame.Controllers
                 return BadRequest();
 
             var id =_repository.AddUser(data.Username, data.Password);
+            if (id.Equals(Guid.Empty))
+                return BadRequest();
             return Ok(id);
         }
 

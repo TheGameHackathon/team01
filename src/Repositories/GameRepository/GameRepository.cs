@@ -15,7 +15,7 @@ namespace thegame.Repository
                 throw new ArgumentException("HOW DO YOU DO THAT SHIT IN CREATE GAME?!");
             
             var game = new Game.Domain.Game(new int[fieldSize,fieldSize]);
-            var gameId = new Guid();
+            var gameId = Guid.NewGuid();
             
             _games.Add(gameId, game);
             _userAssociations.Add(userId, gameId);
