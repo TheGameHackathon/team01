@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Game\Domain" />
+    <Folder Include="Test" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
