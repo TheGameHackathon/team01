@@ -10,14 +10,14 @@
       "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
     ],
     "originalTargetFrameworks": [
-      "netcoreapp3.0"
+      "netcoreapp2.2"
     ],
     "sources": {
       "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
       "https://api.nuget.org/v3/index.json": {}
     },
     "frameworks": {
-      "netcoreapp3.0": {
+      "netcoreapp2.2": {
         "projectReferences": {
           "C:\\Users\\Sergeev Viktor\\Documents\\university\\shpora\\team1\\src\\thegame.csproj": {
             "projectPath": "C:\\Users\\Sergeev Viktor\\Documents\\university\\shpora\\team1\\src\\thegame.csproj"
@@ -32,7 +32,7 @@
     }
   },
   "frameworks": {
-    "netcoreapp3.0": {
+    "netcoreapp2.2": {
       "dependencies": {
         "FluentAssertions": {
           "target": "Package",
@@ -41,6 +41,12 @@
         "Microsoft.NET.Test.Sdk": {
           "target": "Package",
           "version": "[16.4.0, )"
+        },
+        "Microsoft.NETCore.App": {
+          "suppressParent": "All",
+          "target": "Package",
+          "version": "[2.2.0, )",
+          "autoReferenced": true
         },
         "NUnit3TestAdapter": {
           "target": "Package",
