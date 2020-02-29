@@ -22,7 +22,8 @@ namespace thegame.Controllers
             {
                 Name = x.Name,
                 Score = x.Score
-            });
+            })
+                .ToArray();
             return Ok(board);
         }
     }

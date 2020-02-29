@@ -1,6 +1,7 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
 using thegame.DTO;
+using thegame.Game.Domain;
 using thegame.Leaderboard;
 using thegame.Repository;
 
@@ -17,10 +18,14 @@ namespace thegame.Controllers
             _userRepository = userRepository;
         }
         
-        [HttpGet("{id}/score")]
-        public IActionResult Score(string id)
+        [HttpGet("{gameId}/score")]
+        public IActionResult Score(Guid gameId)
         {
-            return Ok(50);
+            var game = _repository.Find(gameId);
+            if (game == null)
+                return BadRequest();
+            
+            return Ok(game.Score);
         }
 
         [HttpPost("create")]
@@ -30,27 +35,46 @@ namespace thegame.Controllers
                 || data.UserId.Equals(Guid.Empty)
                 || data.FieldSize <= 0) 
                 return BadRequest();
+
+            if (_repository.IsUserHaveActiveGame(data.UserId, out var gameId))
+            {
+                var old = _repository.Find(gameId);
+                _userRepository.UpdateUserScore(data.UserId, old.Score);
+                _repository.Remove(gameId);
+            }
             
             var id = _repository.CreateGame(data.UserId, data.FieldSize);
             return Ok(id);
         }
 
-        [HttpPost("{userId}")]
-        public IActionResult MakeTurn(string userId, [FromBody] string turn)
+        [HttpPost("{gameId}")]
+        public IActionResult MakeTurn(Guid gameId, [FromBody] TurnDto data)
         {
-            return Ok();
+            if (gameId.Equals(Guid.Empty)) 
+                return BadRequest();
+            if (data.UserId.Equals(Guid.Empty))
+                return Unauthorized();
+
+            if (!_repository.IsUserPlayThisGame(data.UserId, gameId)) 
+                return Unauthorized();
+            if (!Enum.TryParse<ActionEnum>(data.Turn, out var turn))
+                return BadRequest();
+                
+            return Ok(_repository.Find(gameId).ProcessAction(turn));
+
         }
         
-        [HttpGet("{id}")]
-        public IActionResult GetField(string id)
+        [HttpGet("{gameId}", Name = "GetFields")]
+        public IActionResult GetField(Guid gameId)
         {
-            var temp = new int[10, 10];
-            temp[0, 3] = 5;
-            temp[5, 5] = 3;
-            temp[4, 4] = 4;
-            temp[0, 3] = 57;
-            temp[8, 7] = 65;
-            return Ok(temp);
+            if (gameId.Equals(Guid.Empty))
+                return BadRequest();
+            
+            var game = _repository.Find(gameId);
+            if (game == null)
+                return NotFound();
+            
+            return Ok(game.Field);
         }
     }
 }

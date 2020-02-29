@@ -6,51 +6,40 @@ namespace thegame.Leaderboard
 {
     public class UserRepository : IUserRepository
     {
-        //private Dictionary<User, Guid> _board;
-        //
-        //public void AddUser(string username, string password)
-        //{
-        //    if(FindUser(username) == null)
-        //        _board.Add(new User(username, password), new Guid());
-        //}
-//
-        //public User FindUser(Guid userId)
-        //{
-        //    return _board.Keys.FirstOrDefault(x => x.Name.Equals(username));
-        //}
-//
-        //public Guid GetUserId(string username)
-        //{
-        //    throw new NotImplementedException();
-        //}
-//
-        //public User FindUser(Guid userId)
-        //{
-        //    return _board.Keys.FirstOrDefault(x => x.Name.Equals(username));
-        //}
-//
-        //public void UpdateUserScore(Guid userId, int score)
-        //{
-        //    FindUser(username)?.SetIfMaxScore(score);
-        //}
-//
-        //public IEnumerable<User> GetAllUsers()
-        //{
-        //    return _board.Keys.OrderByDescending(x => x.Score);
-        //}
+        private Dictionary<Guid, User> _board = new Dictionary<Guid, User>();
+
         public Guid AddUser(string username, string password)
         {
-                throw new NotImplementedException();
+            var newUser = new User(username, password);
+            if (!GetUserId(newUser).Equals(Guid.Empty)) 
+                return Guid.Empty;
+            
+            var id = new Guid();
+            _board.Add(id, new User(username, password));
+            return id;
+        }
+
+        public User GetUser(Guid userId)
+        {
+            return _board.TryGetValue(userId, out var user) 
+                ? user : null;
+        }
+
+        public Guid GetUserId(User user)
+        {
+            return _board
+                .FirstOrDefault(x => x.Value.Equals(user))
+                .Key;
         }
 
         public void UpdateUserScore(Guid userId, int score)
         {
-                throw new NotImplementedException();
+            GetUser(userId)?.SetIfMaxScore(score);
         }
 
         public IEnumerable<User> GetAllUsers()
         {
-                throw new NotImplementedException();
+            return _board.Values.OrderByDescending(x => x.Score);
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using thegame.DTO;
 using thegame.Game.Domain;
 
 namespace thegame.Repository
@@ -9,7 +8,9 @@ namespace thegame.Repository
     {
         Guid CreateGame(Guid userId, int fieldSize);
         IGame Find(Guid gameId);
-        IGame Remove(Guid gameId);
+        bool IsUserPlayThisGame(Guid userId, Guid gameId);
+        bool IsUserHaveActiveGame(Guid userId, out Guid gameId);
+        void Remove(Guid gameId);
         IEnumerable<IGame> GetAll();
     }
 }
