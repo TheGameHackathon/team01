@@ -2,10 +2,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace thegame.Controllers
 {
-    [Route("api/game")]
+    [Route("game")]
     public class GameController : Controller
     {
-        [HttpGet("score")]
+        [HttpGet("{id}/score")]
         public IActionResult Score()
         {
             return Ok(50);
