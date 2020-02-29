@@ -3,7 +3,7 @@ namespace thegame.Game.Domain
 {
     public static class ArrayExtension
     {
-        public static int[,] Create2DArray(this int[] arr, int width, int height)
+        public static int[,] As2DArray(this int[] arr, int width, int height)
         {
             var res = new int[width, height];
             for (var i = 0; i < height; ++i)
@@ -12,7 +12,7 @@ namespace thegame.Game.Domain
             return res;
         }
 
-        public static int[] Create1DArray(this int[,] arr)
+        public static int[] As1DArray(this int[,] arr)
         {
             var height = arr.GetLength(0);
             var width = arr.GetLength(1);
