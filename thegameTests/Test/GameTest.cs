@@ -1,16 +1,16 @@
-﻿using NUnit.Framework;
-using FluentAssertions;
+﻿using FluentAssertions;
+using NUnit.Framework;
 using thegame.Game.Domain;
 
-namespace thegame.Test
+namespace thegameTests.Test
 {
     [TestFixture]
     public class GameTest
     {
         [Test]
-        void Should_DontChangeGameField_WhenGetState()
+        public void Should_DontChangeGameField_WhenGetState()
         {
-            var game = new Game.Domain.Game(new int[,]
+            var game = new Game(new int[,]
             {
                 {0, 1},
                 {0, 1}
@@ -24,9 +24,9 @@ namespace thegame.Test
         }
 
         [Test]
-        void Should_MergeCellsWithSameValueOnAction()
+        public void Should_MergeCellsWithSameValueOnAction()
         {
-            var game = new Game.Domain.Game(new int[,]
+            var game = new Game(new int[,]
             {
                 {0, 1},
                 {0, 1}
@@ -40,16 +40,30 @@ namespace thegame.Test
         [TestCase(ActionEnum.left)]
         [TestCase(ActionEnum.right)]
         [TestCase(ActionEnum.up)]
-        void Should_DontMergeCellsWithDifferentValueOnAction(ActionEnum action)
+        public void Should_DontMergeCellsWithDifferentValueOnAction(ActionEnum action)
         {
-            var game = new Game.Domain.Game(new int[,]
+            var game = new Game(new int[,]
             {
                 {0, 1},
                 {2, 3}
             });
 
             game.ProcessAction(action);
-            game.Field.Create1DArray().Should().BeEquivalentTo(new int[] {0, 1, 2, 3});
+            game.Field.Create1DArray().Should().BeEquivalentTo(new[] {0, 1, 2, 3});
+        }
+
+        [Test]
+        public void ShouldNot_MergeThreeAndMoreCellsInOne()
+        {
+            var game = new Game(new [,]
+            {
+                {2},
+                {1},
+                {1}
+            });
+            game.ProcessAction(ActionEnum.down);
+            game.Field[2, 0].Should().Be(2);
+            game.Field[1, 0].Should().Be(2);
         }
     }
 }

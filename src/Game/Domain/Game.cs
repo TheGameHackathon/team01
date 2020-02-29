@@ -61,9 +61,11 @@ namespace thegame.Game.Domain
                     (iNext, jNext) = (iNext + iShift, jNext + jNext);
                 }
 
-                if (!Field.IsInBorders(iNext, jNext) || Field[iLast, jLast] != Field[iNext, jNext]) continue;
-                Field[iLast, iNext] = 0;
-                Field[iNext, jNext] *= 2;
+                if (Field.IsInBorders(iNext, jNext) && Field[iLast, jLast] == Field[iNext, jNext])
+                {
+                    Field[iLast, jLast] = 0;
+                    Field[iNext, jNext] *= 2;
+                }
             }
 
             return Field;
