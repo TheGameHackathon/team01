@@ -36,5 +36,14 @@ namespace thegame.Game.Domain
             var width = arr.GetLength(1);
             return 0 <= i && i < height && 0 <= j && j < width;
         }
+
+        public static void FillWith<T>(this T[,] arr, T val)
+        {
+            var height = arr.GetLength(0);
+            var width = arr.GetLength(1);
+            for (var i = 0; i < height; ++i)
+            for (var j = 0; j < width; ++j)
+                arr[i, j] = val;
+        }
     }
 }
