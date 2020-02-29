@@ -4,8 +4,8 @@ namespace thegame.Game.Domain
 {
     public interface IGame
     {
-        void CreateGame(GameUser user);
-        Field ProcessAction(Guid id, ActionEnum action);
-        Field GetField(Guid id);
+        int[,] Field { get; }
+        int Score { get; }
+        int[,] ProcessAction(ActionEnum action);
     }
 }
