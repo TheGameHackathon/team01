@@ -16,6 +16,7 @@ namespace thegame.Services
                 new CellDto("3", new Vec(3, 1), "color2", "", 20),
                 new CellDto("4", new Vec(1, 0), "color2", "", 20),
                 new CellDto("5", movingObjectPosition, "color4", "☺", 10),
+                new CellDto("6", new Vec(9, 7), "color0", "", 20),
             };
             return new GameDto(testCells, true, true, width, height, Guid.Empty, movingObjectPosition.X == 0, movingObjectPosition.Y);
         }

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace thegame.Models
 {
@@ -24,5 +25,10 @@ namespace thegame.Models
         public Guid Id;
         public bool IsFinished;
         public int Score;
+
+        public CellDto GetCellAtCoords(int x, int y)
+        {
+            return Cells.First(c => c.Pos.X == x && c.Pos.Y == y);
+        }
     }
 }
