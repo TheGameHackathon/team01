@@ -9,6 +9,5 @@ namespace thegame.Models
         }
 
         public readonly int X, Y;
-
     }
 }
