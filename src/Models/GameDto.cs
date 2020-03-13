@@ -28,7 +28,11 @@ namespace thegame.Models
 
         public CellDto GetCellAtCoords(int x, int y)
         {
-            return Cells.First(c => c.Pos.X == x && c.Pos.Y == y);
+            return Cells.FirstOrDefault(c => c.Pos.X == x && c.Pos.Y == y);
+        }
+        public CellDto GetCellAtCoords(Vec coords)
+        {
+            return GetCellAtCoords(coords.X, coords.Y);
         }
     }
 }
