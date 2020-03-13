@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using thegame.Models;
 
 namespace thegame.Services
@@ -9,16 +10,18 @@ namespace thegame.Services
         {
             var width = 10;
             var height = 8;
-            var testCells = new[]
+            var numberOfColors = 5;
+
+            CellDto[] testCells = new CellDto[width*height];
+            Random random = new Random();
+            for (int i = 0; i < width*height; i++)
             {
-                new CellDto("1", new Vec(2, 4), "color1", "", 0),
-                new CellDto("2", new Vec(5, 4), "color1", "", 0),
-                new CellDto("3", new Vec(3, 1), "color2", "", 20),
-                new CellDto("4", new Vec(1, 0), "color2", "", 20),
-                new CellDto("5", movingObjectPosition, "color4", "☺", 10),
-                new CellDto("6", new Vec(9, 7), "color0", "", 20),
-            };
+                testCells[i] = new CellDto((i+1).ToString(), new Vec(i%height, i/width), "color" + random.Next(0,numberOfColors-1), "", 0);
+            }
+
             return new GameDto(testCells, true, true, width, height, Guid.Empty, movingObjectPosition.X == 0, movingObjectPosition.Y);
         }
+
+        
     }
 }
