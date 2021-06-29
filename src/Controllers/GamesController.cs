@@ -12,12 +12,6 @@ namespace thegame.Controllers
     [Route("api/games")]
     public class GamesController : Controller
     {
-        private readonly IMapper mapper;
-
-        public GamesController(IMapper mapper)
-        {
-            this.mapper = mapper;
-        }
         [HttpPost]
         public IActionResult Index()
         {
@@ -27,7 +21,7 @@ namespace thegame.Controllers
             var cells = game.field
                 .ConvertInOneLine()
                 .Select(cell => new CellDto(cell.Id, new VectorDto(cell.Pos.X,cell.Pos.Y), 
-                    Palette.ConvertColor(cell.Color), "", 1)).ToArray();
+                    game.field.Palette.ConvertColor(cell.Color), "", 1)).ToArray();
             GameCollection.Games[guid] = game;
 
 
