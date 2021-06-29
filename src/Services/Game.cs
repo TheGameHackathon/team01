@@ -28,10 +28,10 @@ namespace thegame.Services
             }
         }
 
-        //public bool Finished(Color color)
-        //{
-        //    if (field.ConvertInOneLine().Select(x => x.Color).C)
-        //}
+        public bool Finished(Color color)
+        {
+            return field.ConvertInOneLine().All(c => c.Color == color);
+        }
 
         public Cell[] GetConnectedArea(Cell initialPoint)
         {

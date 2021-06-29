@@ -14,9 +14,10 @@ namespace thegame.Controllers
         public IActionResult Moves(Guid gameId, [FromBody]UserInputDto userInput)
         {
             var game = GameCollection.Games[gameId];
+            Color color = Color.Black;
             if (userInput.ClickedPos != null)
             {
-                var color = game.field.field[userInput.ClickedPos.X, userInput.ClickedPos.Y].Color;
+                color = game.field.field[userInput.ClickedPos.X, userInput.ClickedPos.Y].Color;
                 game.MakeStep(color, new Point(0, 0));
             }
                 
@@ -24,7 +25,7 @@ namespace thegame.Controllers
                 .ConvertInOneLine()
                 .Select(cell => new CellDto(cell.Id, new VectorDto(cell.Pos.X, cell.Pos.Y),
                     Palette.ConvertColor(cell.Color), "", 1)).ToArray();
-            var gameDto = new GameDto(cells, false, true, game.field.Width, game.field.Height, game.Id, false, 0);
+            var gameDto = new GameDto(cells, false, true, game.field.Width, game.field.Height, game.Id, game.Finished(color), 0);
             return Ok(gameDto);
         }
     }
