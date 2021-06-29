@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,10 +22,15 @@ namespace thegame.Controllers
         public IActionResult Index()
         {
             var game = new Game();
-            var gameDto = mapper.Map<GameDto>(game);
-            var cells = game.field.ConvertInOneLine();
-            var cellsDto = mapper.Map<IEnumerable<CellDto>>(cells).ToArray();
-            gameDto.Cells = cellsDto;
+            var cells = game.field
+                .ConvertInOneLine()
+                .Select(cell => new CellDto(cell.Id, new VectorDto(cell.Pos.X,cell.Pos.Y), 
+                    Palette.ConvertColor(cell.Color), "", 1)).ToArray();
+            var gameDto = new GameDto(cells, false, true, 10, 10, Guid.NewGuid(), false, 0);
+            //var gameDto = mapper.Map<GameDto>(game);
+            //var cells = game.field.ConvertInOneLine();
+            //var cellsDto = mapper.Map<IEnumerable<CellDto>>(cells).ToArray();
+            //gameDto.Cells = cellsDto;
 
             return Ok(gameDto);
         }

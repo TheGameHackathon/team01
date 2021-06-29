@@ -13,7 +13,7 @@ namespace thegame.Services
         
         public Game(int width = 10, int height = 10, int colorCount = 5)
         {
-            
+            field = new Field(width, height, new Palette(colorCount));
         }
 
         public void MakeStep(Color color, Point position)

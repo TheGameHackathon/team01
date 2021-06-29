@@ -2,6 +2,10 @@ namespace thegame.Models
 {
     public class CellDto
     {
+        public CellDto()
+        {
+
+        }
         /// <summary>
         /// Frontend animate transition of the cell from old to new state.
         /// </summary>

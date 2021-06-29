@@ -2,6 +2,10 @@ namespace thegame.Models
 {
     public class VectorDto
     {
+        public VectorDto()
+        {
+                
+        }
         public VectorDto(int x, int y)
         {
             X = x;
