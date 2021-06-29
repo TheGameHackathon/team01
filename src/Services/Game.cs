@@ -10,7 +10,7 @@ namespace thegame.Services
     {
         public Guid Id { get; set; }
         public Field field { get; set; }
-        // public int Score { get; set; }
+        public int Score { get; set; }
 
         
         public Game(LevelDifficult difficult)
@@ -18,15 +18,16 @@ namespace thegame.Services
             switch (difficult)
             {
                 case LevelDifficult.LowLevel:
-                    field = new Field(10, 10, new Palette(3));
+                    field = new Field(10, 10, new Palette(4));
                     break;
                 case LevelDifficult.MiddleLevel:
-                    field = new Field(20, 20, new Palette(4));
+                    field = new Field(20, 20, new Palette(8));
                     break;
                 case LevelDifficult.HighLevel:
-                    field = new Field(30, 30, new Palette(5));
+                    field = new Field(30, 30, new Palette(16));
                     break;
             }
+            Score = 0;
         }
 
         public void MakeStep(Color color, Point position)
@@ -35,8 +36,40 @@ namespace thegame.Services
             var cellsToRepaint = GetConnectedArea(initialPoint);
             foreach (var cell in cellsToRepaint)
             {
+                Score++;
                 cell.Color = color;
             }
+        }
+
+        public void MakeAIStep()
+        {
+            var initialColor = field.field[0, 0].Color;
+            var maxNeighbours = 0;
+            Color targetColor = Palette.colors[0];
+            var backup = new Color[field.Width, field.Height];
+            var backupScore = Score;
+            foreach (var cell in field.ConvertInOneLine())
+            {
+                backup[cell.Pos.X, cell.Pos.Y] = cell.Color;
+            }
+            foreach (var color in Palette.colors)
+            {
+                MakeStep(color, new Point(0,0));
+                var cellsToRepaint = GetConnectedArea(field.field[0,0]);
+                if (maxNeighbours < cellsToRepaint.Length)
+                {
+                    maxNeighbours = cellsToRepaint.Length;
+                    targetColor = color;
+                }
+
+                foreach (var cell in field.ConvertInOneLine())
+                {
+                    cell.Color = backup[cell.Pos.X, cell.Pos.Y];
+                }
+            }
+
+            Score = backupScore;
+            MakeStep(targetColor, new Point(0,0));
         }
 
         public bool Finished(Color color)

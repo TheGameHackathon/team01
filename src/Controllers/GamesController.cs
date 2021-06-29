@@ -29,11 +29,9 @@ namespace thegame.Controllers
                 .Select(cell => new CellDto(cell.Id, new VectorDto(cell.Pos.X,cell.Pos.Y), 
                     Palette.ConvertColor(cell.Color), "", 1)).ToArray();
             GameCollection.Games[guid] = game;
-            var gameDto = new GameDto(cells, true, true, game.field.Width, game.field.Height, guid, false, 0);
-            //var gameDto = mapper.Map<GameDto>(game);
-            //var cells = game.field.ConvertInOneLine();
-            //var cellsDto = mapper.Map<IEnumerable<CellDto>>(cells).ToArray();
-            //gameDto.Cells = cellsDto;
+
+
+            var gameDto = new GameDto(cells, true, true, game.field.Width, game.field.Height, guid, false, game.Score);
 
             return Ok(gameDto);
         }
