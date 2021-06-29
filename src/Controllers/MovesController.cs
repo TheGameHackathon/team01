@@ -35,7 +35,8 @@ namespace thegame.Controllers
                 .ConvertInOneLine()
                 .Select(cell => new CellDto(cell.Id, new VectorDto(cell.Pos.X, cell.Pos.Y),
                     Palette.ConvertColor(cell.Color), "", 1)).ToArray();
-            var gameDto = new GameDto(cells, true, true, game.field.Width, game.field.Height, game.Id, game.Finished(color), 0);
+
+            var gameDto = new GameDto(cells, true, true, game.field.Width, game.field.Height, game.Id, game.Finished(color), game.Score);
             return Ok(gameDto);
         }
 

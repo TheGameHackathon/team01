@@ -10,7 +10,7 @@ namespace thegame.Services
     {
         public Guid Id { get; set; }
         public Field field { get; set; }
-        // public int Score { get; set; }
+        public int Score { get; set; }
 
         
         public Game(LevelDifficult difficult)
@@ -27,6 +27,7 @@ namespace thegame.Services
                     field = new Field(30, 30, new Palette(5));
                     break;
             }
+            Score = 0;
         }
 
         public void MakeStep(Color color, Point position)
@@ -35,6 +36,7 @@ namespace thegame.Services
             var cellsToRepaint = GetConnectedArea(initialPoint);
             foreach (var cell in cellsToRepaint)
             {
+                Score++;
                 cell.Color = color;
             }
         }
