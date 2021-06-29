@@ -13,6 +13,6 @@ namespace thegame.Services
 
         public string Id { get; }
         public Point Pos { get; set; }
-        public Color Color { get; }
+        public Color Color { get; set; }
     }
 }
