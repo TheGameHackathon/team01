@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace thegame.Services
 {
@@ -10,6 +11,7 @@ namespace thegame.Services
         public Guid Id { get; set; }
         public Field field { get; set; }
         // public int Score { get; set; }
+
         
         public Game(int width = 10, int height = 10, int colorCount = 5)
         {
@@ -22,9 +24,14 @@ namespace thegame.Services
             var cellsToRepaint = GetConnectedArea(initialPoint);
             foreach (var cell in cellsToRepaint)
             {
-                cell.Color = initialPoint.Color;
+                cell.Color = color;
             }
         }
+
+        //public bool Finished(Color color)
+        //{
+        //    if (field.ConvertInOneLine().Select(x => x.Color).C)
+        //}
 
         public Cell[] GetConnectedArea(Cell initialPoint)
         {

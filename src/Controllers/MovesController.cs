@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using thegame.Models;
@@ -12,10 +13,19 @@ namespace thegame.Controllers
         [HttpPost]
         public IActionResult Moves(Guid gameId, [FromBody]UserInputDto userInput)
         {
-            var game = TestData.AGameDto(userInput.ClickedPos ?? new VectorDto(1, 1));
+            var game = GameCollection.Games[gameId];
             if (userInput.ClickedPos != null)
-                game.Cells.First(c => c.Type == "color4").Pos = userInput.ClickedPos;
-            return Ok(game);
+            {
+                var color = game.field.field[userInput.ClickedPos.X, userInput.ClickedPos.Y].Color;
+                game.MakeStep(color, new Point(0, 0));
+            }
+                
+            var cells = game.field
+                .ConvertInOneLine()
+                .Select(cell => new CellDto(cell.Id, new VectorDto(cell.Pos.X, cell.Pos.Y),
+                    Palette.ConvertColor(cell.Color), "", 1)).ToArray();
+            var gameDto = new GameDto(cells, false, true, game.field.Width, game.field.Height, game.Id, false, 0);
+            return Ok(gameDto);
         }
     }
 }
