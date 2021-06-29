@@ -45,14 +45,14 @@ namespace thegame.Services
         {
             var initialColor = field.field[0, 0].Color;
             var maxNeighbours = 0;
-            Color targetColor = Palette.colors[0];
+            Color targetColor = field.Palette.colors[0];
             var backup = new Color[field.Width, field.Height];
             var backupScore = Score;
             foreach (var cell in field.ConvertInOneLine())
             {
                 backup[cell.Pos.X, cell.Pos.Y] = cell.Color;
             }
-            foreach (var color in Palette.colors)
+            foreach (var color in field.Palette.colors)
             {
                 MakeStep(color, new Point(0,0));
                 var cellsToRepaint = GetConnectedArea(field.field[0,0]);

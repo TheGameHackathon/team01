@@ -34,7 +34,7 @@ namespace thegame.Controllers
             var cells = game.field
                 .ConvertInOneLine()
                 .Select(cell => new CellDto(cell.Id, new VectorDto(cell.Pos.X, cell.Pos.Y),
-                    Palette.ConvertColor(cell.Color), "", 1)).ToArray();
+                    game.field.Palette.ConvertColor(cell.Color), "", 1)).ToArray();
 
             var gameDto = new GameDto(cells, true, true, game.field.Width, game.field.Height, game.Id, game.Finished(game.field.field[0,0].Color), game.Score);
             return Ok(gameDto);

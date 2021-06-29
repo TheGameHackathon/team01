@@ -18,14 +18,6 @@ namespace thegame
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAutoMapper(cfg =>
-            {
-                cfg.CreateMap<Game, GameDto>();
-                cfg.CreateMap<Cell, CellDto>()
-                    .ForMember(cfg => cfg.Type, opt => opt.MapFrom(src => Palette.ConvertColor(src.Color)))
-                    .ForMember(cfg => cfg.Pos, opt => opt.MapFrom(src => new VectorDto(src.Pos.X, src.Pos.Y)));
-
-            }, new System.Reflection.Assembly[0]);
             services.AddMvc();
         }
 
