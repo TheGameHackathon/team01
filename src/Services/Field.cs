@@ -8,7 +8,7 @@ namespace thegame.Services
         public int Height { get; set; }
         public Cell[,] field;
 
-        public Field(int width, int height, Color[] colors)
+        public Field(int width, int height, Palette palette)
         {
             Width = width;
             Height = height;
