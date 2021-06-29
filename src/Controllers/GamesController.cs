@@ -22,11 +22,14 @@ namespace thegame.Controllers
         public IActionResult Index()
         {
             var game = new Game();
+            var guid = Guid.NewGuid();
+            game.Id = guid;
             var cells = game.field
                 .ConvertInOneLine()
                 .Select(cell => new CellDto(cell.Id, new VectorDto(cell.Pos.X,cell.Pos.Y), 
                     Palette.ConvertColor(cell.Color), "", 1)).ToArray();
-            var gameDto = new GameDto(cells, false, true, 10, 10, Guid.NewGuid(), false, 0);
+            GameCollection.Games[guid] = game;
+            var gameDto = new GameDto(cells, false, true, game.field.Width, game.field.Height, guid, false, 0);
             //var gameDto = mapper.Map<GameDto>(game);
             //var cells = game.field.ConvertInOneLine();
             //var cellsDto = mapper.Map<IEnumerable<CellDto>>(cells).ToArray();

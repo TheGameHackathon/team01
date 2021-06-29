@@ -23,7 +23,13 @@ namespace thegame.Services
         public static string ConvertColor(Color color)
         {
             var index = Array.IndexOf(colors, color);
-            return $"color{index}";
+            return $"color{index + 1}";
+        }
+
+        public static Color ConvertColor(string color)
+        {
+            var index = int.Parse(color.Substring(5));
+            return colors[index - 1];
         }
     }
 }
