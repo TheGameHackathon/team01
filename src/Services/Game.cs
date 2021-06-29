@@ -10,12 +10,14 @@ namespace thegame.Services
     {
         public Guid Id { get; set; }
         public Field field { get; set; }
-        // public int Score { get; set; }
+        public int Score { get; set; }
 
         
         public Game(int width = 10, int height = 10, int colorCount = 5)
         {
             field = new Field(width, height, new Palette(colorCount));
+            //Score = width * height;
+            Score = 0;
         }
 
         public void MakeStep(Color color, Point position)
@@ -24,6 +26,7 @@ namespace thegame.Services
             var cellsToRepaint = GetConnectedArea(initialPoint);
             foreach (var cell in cellsToRepaint)
             {
+                Score++;
                 cell.Color = color;
             }
         }
