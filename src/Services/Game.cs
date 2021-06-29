@@ -24,10 +24,18 @@ namespace thegame.Services
         {
             var initialPoint = field.field[position.X, position.Y];
             var cellsToRepaint = GetConnectedArea(initialPoint);
+            var backCellsToRepaintCount = cellsToRepaint.Count();
+            var backScore = Score;
+
             foreach (var cell in cellsToRepaint)
             {
                 Score += cell.Color == color ? 0 : 1;
                 cell.Color = color;
+            }
+
+            if (backCellsToRepaintCount == GetConnectedArea(initialPoint).Count())
+            {
+                Score = backScore;
             }
         }
 
