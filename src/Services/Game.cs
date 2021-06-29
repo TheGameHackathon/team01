@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -9,32 +8,27 @@ namespace thegame.Services
     public class Game
     {
         public Guid Id { get; set; }
-        public Field field { get; set; }
+        public Field Field { get; set; }
         public int Score { get; set; }
 
         
         public Game(LevelDifficult difficult)
         {
-            switch (difficult)
+            Field = difficult switch
             {
-                case LevelDifficult.LowLevel:
-                    field = new Field(10, 10, new Palette(4));
-                    break;
-                case LevelDifficult.MiddleLevel:
-                    field = new Field(20, 20, new Palette(8));
-                    break;
-                case LevelDifficult.HighLevel:
-                    field = new Field(30, 30, new Palette(16));
-                    break;
-            }
+                LevelDifficult.LowLevel => new Field(10, 10, new Palette(4)),
+                LevelDifficult.MiddleLevel => new Field(20, 20, new Palette(8)),
+                LevelDifficult.HighLevel => new Field(30, 30, new Palette(16)),
+                _ => Field
+            };
             Score = 0;
         }
 
         public void MakeStep(Color color, Point position)
         {
-            var initialPoint = field.field[position.X, position.Y];
+            var initialPoint = Field.Cells[position.X, position.Y];
             var cellsToRepaint = GetConnectedArea(initialPoint);
-            var backCellsToRepaintCount = cellsToRepaint.Count();
+            var backCellsToRepaintCount = cellsToRepaint.Length;
             var backScore = Score;
 
             foreach (var cell in cellsToRepaint)
@@ -43,7 +37,7 @@ namespace thegame.Services
                 cell.Color = color;
             }
 
-            if (backCellsToRepaintCount == GetConnectedArea(initialPoint).Count())
+            if (backCellsToRepaintCount == GetConnectedArea(initialPoint).Length)
             {
                 Score = backScore;
             }
@@ -51,26 +45,25 @@ namespace thegame.Services
 
         public void MakeAIStep()
         {
-            var initialColor = field.field[0, 0].Color;
-            var maxNeighbours = 0;
-            Color targetColor = field.Palette.colors[0];
-            var backup = new Color[field.Width, field.Height];
+            var maxNeighbors = 0;
+            var targetColor = Field.Palette.Colors[0];
+            var backup = new Color[Field.Width, Field.Height];
             var backupScore = Score;
-            foreach (var cell in field.ConvertInOneLine())
+            foreach (var cell in Field.ConvertInOneLine())
             {
                 backup[cell.Pos.X, cell.Pos.Y] = cell.Color;
             }
-            foreach (var color in field.Palette.colors)
+            foreach (var color in Field.Palette.Colors)
             {
                 MakeStep(color, new Point(0,0));
-                var cellsToRepaint = GetConnectedArea(field.field[0,0]);
-                if (maxNeighbours < cellsToRepaint.Length)
+                var cellsToRepaint = GetConnectedArea(Field.Cells[0,0]);
+                if (maxNeighbors < cellsToRepaint.Length)
                 {
-                    maxNeighbours = cellsToRepaint.Length;
+                    maxNeighbors = cellsToRepaint.Length;
                     targetColor = color;
                 }
 
-                foreach (var cell in field.ConvertInOneLine())
+                foreach (var cell in Field.ConvertInOneLine())
                 {
                     cell.Color = backup[cell.Pos.X, cell.Pos.Y];
                 }
@@ -82,7 +75,7 @@ namespace thegame.Services
 
         public bool Finished(Color color)
         {
-            return field.ConvertInOneLine().All(c => c.Color == color);
+            return Field.ConvertInOneLine().All(c => c.Color == color);
         }
 
         public Cell[] GetConnectedArea(Cell initialPoint)
@@ -96,13 +89,13 @@ namespace thegame.Services
             {
                 var current = stack.Pop();
                 visitedPoints.Add(current);
-                var neighbours = GetNeighbours(current);
-                foreach (var neighbour in neighbours)
+                var neighbors = GetNeighbors(current);
+                foreach (var neighbor in neighbors)
                 {
-                    if (neighbour.Color.Equals(color) && !visitedPoints.Contains(neighbour))
+                    if (neighbor.Color.Equals(color) && !visitedPoints.Contains(neighbor))
                     {
-                        connectedArea.Add(neighbour);
-                        stack.Push(neighbour);
+                        connectedArea.Add(neighbor);
+                        stack.Push(neighbor);
                     }
                 }
             }
@@ -110,17 +103,17 @@ namespace thegame.Services
             return connectedArea.ToArray();
         }
 
-        private Cell[] GetNeighbours(Cell cell)
+        private Cell[] GetNeighbors(Cell cell)
         {
             var points = new List<Cell>();
             if (cell.Pos.X > 0)
-                points.Add(field.field[cell.Pos.X - 1, cell.Pos.Y]);
-            if (cell.Pos.X < field.Width - 1)
-                points.Add(field.field[cell.Pos.X + 1, cell.Pos.Y]);
+                points.Add(Field.Cells[cell.Pos.X - 1, cell.Pos.Y]);
+            if (cell.Pos.X < Field.Width - 1)
+                points.Add(Field.Cells[cell.Pos.X + 1, cell.Pos.Y]);
             if (cell.Pos.Y > 0)
-                points.Add(field.field[cell.Pos.X, cell.Pos.Y - 1]);
-            if (cell.Pos.Y < field.Height - 1)
-                points.Add(field.field[cell.Pos.X, cell.Pos.Y + 1]);
+                points.Add(Field.Cells[cell.Pos.X, cell.Pos.Y - 1]);
+            if (cell.Pos.Y < Field.Height - 1)
+                points.Add(Field.Cells[cell.Pos.X, cell.Pos.Y + 1]);
             return points.ToArray();
         }
     }
