@@ -1,4 +1,5 @@
 using System.Drawing;
+using thegame.Models;
 
 namespace thegame.Services
 {
@@ -17,7 +18,21 @@ namespace thegame.Services
 
         private void CreateField()
         {
-               
+
+        }
+
+        public Cell[] ConvertInOneLine()
+        {
+            var cells = new Cell[Width * Height];
+            for (int x = 0; x < Width; x++)
+            {
+                for (int y = 0; y < Height; y++)
+                {
+                    cells[x * Width + y] = field[x, y];
+                }
+            }
+
+            return cells;
         }
     }
 }
