@@ -26,7 +26,7 @@ namespace thegame.Services
             var cellsToRepaint = GetConnectedArea(initialPoint);
             foreach (var cell in cellsToRepaint)
             {
-                Score++;
+                Score += cell.Color == color ? 0 : 1;
                 cell.Color = color;
             }
         }
