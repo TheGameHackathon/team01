@@ -21,7 +21,7 @@ namespace thegame.Controllers
         [HttpPost]
         public IActionResult Index()
         {
-            var game = new Game();
+            var game = new Game(LevelDifficult.HighLevel);
             var guid = Guid.NewGuid();
             game.Id = guid;
             var cells = game.field
@@ -29,7 +29,7 @@ namespace thegame.Controllers
                 .Select(cell => new CellDto(cell.Id, new VectorDto(cell.Pos.X,cell.Pos.Y), 
                     Palette.ConvertColor(cell.Color), "", 1)).ToArray();
             GameCollection.Games[guid] = game;
-            var gameDto = new GameDto(cells, false, true, game.field.Width, game.field.Height, guid, false, 0);
+            var gameDto = new GameDto(cells, true, true, game.field.Width, game.field.Height, guid, false, 0);
             //var gameDto = mapper.Map<GameDto>(game);
             //var cells = game.field.ConvertInOneLine();
             //var cellsDto = mapper.Map<IEnumerable<CellDto>>(cells).ToArray();

@@ -33,7 +33,7 @@ namespace thegame.Services
                     field[x, y] = new Cell(
                         Guid.NewGuid().ToString(), 
                         new Point(x, y), 
-                        Palette.colors[random.Next(0, 5)]
+                        Palette.colors[random.Next(0, Palette.colors.Length)]
                         );
                 }
             }
