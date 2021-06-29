@@ -21,26 +21,25 @@ namespace thegame.Controllers
                 GameCollection.Games[gameId] = game;
             }
 
-            Color color = Color.Black;
-            if (userInput?.ClickedPos != null)
+            if (userInput.ClickedPos != null)
             {
-                if (userInput.ClickedPos.X < game.field.Width && userInput.ClickedPos.Y < game.field.Height)
+                if (userInput.ClickedPos.X < game.Field.Width && userInput.ClickedPos.Y < game.Field.Height)
                 {
-                    color = game.field.field[userInput.ClickedPos.X, userInput.ClickedPos.Y].Color;
+                    var color = game.Field.Cells[userInput.ClickedPos.X, userInput.ClickedPos.Y].Color;
                     game.MakeStep(color, new Point(0, 0));
                 }
             }
 
-            var cells = game.field
+            var cells = game.Field
                 .ConvertInOneLine()
                 .Select(cell => new CellDto(cell.Id, new VectorDto(cell.Pos.X, cell.Pos.Y),
-                    game.field.Palette.ConvertColor(cell.Color), "", 1)).ToArray();
+                    game.Field.Palette.ConvertColor(cell.Color), "", 1)).ToArray();
 
-            var gameDto = new GameDto(cells, true, true, game.field.Width, game.field.Height, game.Id, game.Finished(game.field.field[0,0].Color), game.Score);
+            var gameDto = new GameDto(cells, true, true, game.Field.Width, game.Field.Height, game.Id, game.Finished(game.Field.Cells[0,0].Color), game.Score);
             return Ok(gameDto);
         }
 
-        private Game HandleKeyboardPressing(int key, Game game)
+        private static Game HandleKeyboardPressing(int key, Game game)
         {
             switch (key)
             {

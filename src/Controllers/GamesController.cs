@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using thegame.Models;
 using thegame.Services;
@@ -18,14 +15,15 @@ namespace thegame.Controllers
             var game = new Game(LevelDifficult.HighLevel);
             var guid = Guid.NewGuid();
             game.Id = guid;
-            var cells = game.field
+            var cells = game.Field
                 .ConvertInOneLine()
                 .Select(cell => new CellDto(cell.Id, new VectorDto(cell.Pos.X,cell.Pos.Y), 
-                    game.field.Palette.ConvertColor(cell.Color), "", 1)).ToArray();
+                    game.Field.Palette.ConvertColor(cell.Color), "", 1)).ToArray();
             GameCollection.Games[guid] = game;
 
 
-            var gameDto = new GameDto(cells, true, true, game.field.Width, game.field.Height, guid, false, game.Score);
+            var gameDto = new GameDto(cells, true, true,
+                game.Field.Width, game.Field.Height, guid, false, game.Score);
 
             return Ok(gameDto);
         }
