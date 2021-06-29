@@ -18,7 +18,12 @@ namespace thegame.Services
 
         public void MakeStep(Color color, Point position)
         {
-            throw new Exception();
+            var initialPoint = field.field[position.X, position.Y];
+            var cellsToRepaint = GetConnectedArea(initialPoint);
+            foreach (var cell in cellsToRepaint)
+            {
+                cell.Color = initialPoint.Color;
+            }
         }
 
         public Cell[] GetConnectedArea(Cell initialPoint)
