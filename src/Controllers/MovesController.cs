@@ -36,7 +36,7 @@ namespace thegame.Controllers
                 .Select(cell => new CellDto(cell.Id, new VectorDto(cell.Pos.X, cell.Pos.Y),
                     Palette.ConvertColor(cell.Color), "", 1)).ToArray();
 
-            var gameDto = new GameDto(cells, true, true, game.field.Width, game.field.Height, game.Id, game.Finished(color), game.Score);
+            var gameDto = new GameDto(cells, true, true, game.field.Width, game.field.Height, game.Id, game.Finished(game.field.field[0,0].Color), game.Score);
             return Ok(gameDto);
         }
 
@@ -50,13 +50,11 @@ namespace thegame.Controllers
                     return new Game(LevelDifficult.MiddleLevel);
                 case 51:
                     return new Game(LevelDifficult.HighLevel);
-                default:
-                    break;
             }
 
-            if (key == 'i')
+            if (key == 73)
             {
-                //II.MakeStep();
+                game.MakeAIStep();
             }
 
             return game;
