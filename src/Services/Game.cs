@@ -13,9 +13,20 @@ namespace thegame.Services
         // public int Score { get; set; }
 
         
-        public Game(int width = 10, int height = 10, int colorCount = 5)
+        public Game(LevelDifficult difficult)
         {
-            field = new Field(width, height, new Palette(colorCount));
+            switch (difficult)
+            {
+                case LevelDifficult.LowLevel:
+                    field = new Field(10, 10, new Palette(3));
+                    break;
+                case LevelDifficult.MiddleLevel:
+                    field = new Field(20, 20, new Palette(4));
+                    break;
+                case LevelDifficult.HighLevel:
+                    field = new Field(30, 30, new Palette(5));
+                    break;
+            }
         }
 
         public void MakeStep(Color color, Point position)
